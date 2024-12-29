@@ -11,7 +11,7 @@ export default clerkMiddleware(async (auth, request) => {
   console.log('Incoming Request URL:', request.url);
 
   // Handle public routes
-  if (isPublicRoute(request.url)) {
+  if (isPublicRoute(request)) { // Pass the entire request object
     console.log('Public route accessed:', request.url);
     return; // Skip authentication for public routes
   }
@@ -26,8 +26,6 @@ export default clerkMiddleware(async (auth, request) => {
     console.error('Authentication failed for:', request.url, 'Error:', error);
 
     // Optionally, you can throw an error or return a custom response
-    // For example, if you want a custom error page:
-    // return new Response('Authentication required', { status: 401 });
     throw error; // Re-throw to let Clerk handle the redirect
   }
 });
